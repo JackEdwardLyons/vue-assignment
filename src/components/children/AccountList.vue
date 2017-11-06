@@ -1,5 +1,9 @@
 <template>
-    <h1>Hello AccountList</h1>
+   
+   <div class="account-list-wrapper">
+       <h1>Hello Account List</h1>
+   </div>
+   
 </template>
 
 <script>
@@ -8,6 +12,9 @@
     };
 </script>
 
-<style>
-    
+<style lang="scss">
+    .account-list-wrapper {
+        border: 1px solid red;
+        width: 50%;
+    }
 </style>
