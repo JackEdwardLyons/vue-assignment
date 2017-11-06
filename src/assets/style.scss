@@ -9,7 +9,6 @@ $baseGrey: #D6DCDB;
 /* Wrappers & Containers */
 .account-list-wrapper {
     width: 50%;
-    border: 1px solid red;
 }
 
 /* Mixins */
@@ -52,6 +51,11 @@ $baseGrey: #D6DCDB;
 /* Utilities */
 .text-left {
     text-align: left;
+}
+
+.active {
+    background: $primaryGreen !important;
+    color: #FFF;
 }
 
 /* Base Styles */

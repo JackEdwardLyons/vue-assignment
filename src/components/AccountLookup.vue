@@ -8,34 +8,39 @@
         <AccountProperties :selectedAccount="selectedAccount" />
       </div>
     </div>
-    
-  
+
   </div>
 </template>
 
 <script>
-import AccountSearch     from './children/AccountSearch';
-import AccountList       from './children/AccountList';
-import AccountProperties from './children/AccountProperties';
-
-export default {
-  name: 'AccountLookup',
-  components: { 
-    AccountSearch,
-    AccountList,
-    AccountProperties
-  },
-  data () {
-    return {
-      selectedAccount: []
-    };
-  },
-  methods: {
-    showSelectedAccount( account ) {
-      this.selectedAccount = account;
+  import AccountSearch     from './children/AccountSearch';
+  import AccountList       from './children/AccountList';
+  import AccountProperties from './children/AccountProperties';
+  import ACCOUNT_DATA      from '../util/accounts.js';
+      
+  export default {
+    name: 'AccountLookup',
+    components: { 
+      AccountSearch,
+      AccountList,
+      AccountProperties
+    },
+    data () {
+      return {
+        selectedAccount: []
+      };
+    },
+    methods: {
+      showSelectedAccount( account ) {
+        this.selectedAccount = [];
+        // This gets the emitted payload from the AccountList Component
+        this.selectedAccount = account;
+      }
+    },
+    created() {
+      this.selectedAccount = ACCOUNT_DATA[0].Properties;
     }
-  }
-};
+  };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

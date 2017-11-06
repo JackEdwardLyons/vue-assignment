@@ -14,15 +14,11 @@
         name: 'AccountProperties',
         props: [ 'selectedAccount' ],
         data() {
-            return {
-                accountProps: []
-            }
+            return { };
         },
         computed: {
             selectedAccountProps() {
-                return this.selectedAccount
-                    .map( item => item.Properties )[0]
-                    .map( item => item.Name )
+                return this.selectedAccount.map( account => account.Name );
             }
         }
     };
