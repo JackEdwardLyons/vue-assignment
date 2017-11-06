@@ -39,12 +39,13 @@ export default {
 .container {
   width: 75%;
   margin: 0 auto;
-  border: 1px solid black;
 }
 
 .account-ui-wrapper {
   padding: 10px;
-  background: goldenrod;
+  border: none;
+  background: #D6DCDB;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .flex {

@@ -12,18 +12,26 @@
 </script>
 
 <style lang="scss">
-    
-    .search-wrapper {
-        border: 1px solid yellow;
-        display: flex;
-        padding: 10px;
-        .search-input {
-            width: 75%;
-            padding: 10px;
-        }
-        .search-submit {
-            width: 25%;
-            padding: 10px;
+
+.search-wrapper {
+    border: 1px solid yellow;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    .search-input {
+        width: 75%;
+        @extend .search-input-base;
+    }
+    .search-submit {
+        @extend .search-input-base;
+        color: #FFF;
+        cursor: pointer;
+        text-transform: uppercase;
+        background: $primaryGreen;
+        width: 22%;
+        &:hover {
+            background: lighten( $primaryGreen, 10% );
         }
     }
+}
 </style>

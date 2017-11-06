@@ -50,8 +50,11 @@ exports.cssLoaders = function (options) {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
+    // sass: generateLoaders('sass', { indentedSyntax: true }),
+    // scss: generateLoaders('sass'),
+    // Add Sass + Scss abilities
+    sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax=1&data=@import "./src/assets/style"',
+    scss: 'vue-style-loader!css-loader!sass-loader?data=@import "./src/assets/style";',
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
   }
