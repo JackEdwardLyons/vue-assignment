@@ -1,11 +1,13 @@
 <template>
     <div class="account-list-wrapper">
-        <h1>Properties</h1>
+        
+        <h1 class="text-left">Properties</h1>
         <ul class="account-list">
             <li class="account-list__item" v-for="property in selectedAccountProps">
                 {{ property }}
             </li>
         </ul>
+        
     </div>
 </template>
 
