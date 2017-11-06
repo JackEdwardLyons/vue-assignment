@@ -4,8 +4,8 @@
     <div class="account-ui-wrapper">
       <AccountSearch />
       <div class="flex">
-        <AccountList />
-        <AccountProperties />
+        <AccountList @clicked="showSelectedAccount" />
+        <AccountProperties :selectedAccount="selectedAccount" />
       </div>
     </div>
     
@@ -27,8 +27,13 @@ export default {
   },
   data () {
     return {
-      
+      selectedAccount: []
     };
+  },
+  methods: {
+    showSelectedAccount( account ) {
+      this.selectedAccount = account;
+    }
   }
 };
 </script>

@@ -28,6 +28,32 @@ $baseGrey: #D6DCDB;
     padding: 10px;
 }
 
+.account-list {
+    list-style: none;
+    text-align: left;
+    padding: 0;
+    
+    &__item {
+        padding: 1rem 0;
+        cursor: pointer;
+        background: #FFF;
+        &:nth-child(even) {
+            background: #E9E9E9;
+        }
+        &:hover {
+            background: $secondaryGreen;
+            transition: .2s ease;
+            color: #FFF;
+        }
+    }
+    
+}
+
+/* Utilities */
+.text-left {
+    text-align: left;
+}
+
 /* Base Styles */
 body {
     background: #EEEEED;
