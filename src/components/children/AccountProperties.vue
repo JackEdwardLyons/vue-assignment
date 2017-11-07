@@ -14,13 +14,32 @@
 <script>
     export default {
         name: 'AccountProperties',
-        props: [ 'selectedAccount' ],
+        props: [ 'selectedAccount', 'dropDownOption', 'allAccountData', 'searchTerm' ],
         data() {
-            return { };
+            return {
+                propIndex: 0
+            }
         },
         computed: {
             selectedAccountProps() {
-                return this.selectedAccount.map( account => account.Name );
+                
+                if ( this.dropDownOption === 'Accounts' ) {
+                   return this.selectedAccount.map( account => account.Name );
+                } else if (this.dropDownOption === 'Properties') {
+                    
+                    this.propIndex = this.allAccountData.map( ( item, index ) => {
+                      return item.Properties.filter( ( prop, key ) => {
+                        if ( prop.Name.includes( this.searchTerm ) ) {
+                          return item;
+                        }
+                      })
+                    })
+
+                    var getCorrectIndex = this.propIndex.findIndex( item => item.length );
+                    //this.allAccountData[ propIndex ][0].map( account => account.Name )
+                    
+                    
+                }
             }
         }
     };

@@ -26,7 +26,7 @@
                         {{ option }}
                     </option>
                 </select>
-                <button @click="findAccountMatch()" class="search-submit">Search</button>
+                <!--<button @click="findAccountMatch()" class="search-submit">Search</button>-->
             </div>
         </div>
         <!-- Account Search -->
@@ -36,12 +36,13 @@
 <script>
     export default {
         name: 'AccountSearch',
-        props: [ 'matchedAccounts' ],
+        props: [ 'matchedAccounts', 'allAccountData' ],
         data() {
             return {
                 searchTerm: '',
                 dropDownOptions: [ 'Accounts', 'Properties' ],
-                selectedOption: 'Accounts'
+                selectedOption: 'Accounts',
+                clickedAccountName: ''
             };
         },
         methods: {
@@ -51,11 +52,32 @@
             clickedAccount( match, key ) {
                 console.log('match: ', match, 'key: ', key )
                 // Grab only the matching account properties
+                console.log( 'matchedaccs', this.matchedAccounts[0] );
+                // Iterate over all accounts
                 const accountNameProps = this.matchedAccounts[0].map( item => item.Properties );
+                const matchedIndex     = this.allAccountData.findIndex( item => item.AccountName.includes( match ) );
+
                 // Send payload with account name and index for toggling the "selected" class
-                this.$emit( 'clicked', accountNameProps[ key ], key );
+                this.$emit( 'clicked', accountNameProps[ matchedIndex ], matchedIndex );
                 // Empty searchTerm for next search
                 this.searchTerm = '';
+            },
+            
+            findNameIndex() {
+                
+            },
+            
+            findPropIndex() {
+                var returnedProp = this.allAccountData.map( ( item, index ) => {
+                    return item.Properties.filter( ( prop, key ) => {
+                      if ( prop.Name.includes( this.searchTerm ) ) {
+                        return item;
+                      }
+                    })
+                })
+                const propIndex = returnedProp.findIndex( item => item.length );
+                console.log( propIndex )
+                return propIndex;
             },
             postNewOption( e ) {
                 this.$emit( 'newDropDownOption', this.selectedOption );
@@ -68,20 +90,15 @@
                   
                   switch( this.selectedOption ) {
                       case 'Accounts':
-                          console.log( 'accounts: ', this.matchedAccounts )
                         return this.matchedAccounts[0].map( item => item.AccountName );
                         break;
                       case 'Properties':
-                        return this.matchedAccounts;
+                        const search = this.matchedAccounts[0].map( item => item.Name );
+                        const regex = new RegExp( this.searchTerm, 'gi' );
+                        return search.filter( prop => prop.match( regex ) );
                         break;
                   }
                 }
-            }
-        },
-        watch: {
-            selectedOption() {
-            
-                console.log('watching matchedAccountNames',  this.matchedAccountNames );
             }
         }
     };

@@ -6,10 +6,14 @@
                      @searched="findAccountMatch" 
                      @newDropDownOption="getNewCategory"
                      :matchedAccounts="matchedAccounts" 
+                     :allAccountData="allAccountData"
       />
       <div class="flex space-around">
         <AccountList @clicked="showSelectedAccount" :selectedAccountIndex="selectedAccountIndex" />
-        <AccountProperties :selectedAccount="selectedAccount" />
+        <AccountProperties :allAccountData="allAccountData" 
+                           :dropDownOption="dropDownOption" 
+                           :selectedAccount="selectedAccount" 
+                           :searchTerm="searchTerm" />
       </div>
     </div>
     <!-- end Account Lookup -->
@@ -46,6 +50,7 @@
         this.selectedAccountIndex = key;
         // This gets the emitted payload from the AccountList Component
         this.selectedAccount = account;
+        console.log( 'selected Account: ', account );
       },
       
       findAccountMatch( query ) {
@@ -61,27 +66,24 @@
          * each account and it's corresponding 'Properties'.
          * This is done by concatenating all the Property Arrays using reduce
          */
+         
+         // This could be refactored into a computed prop...
         const props = data.map( account => account.Properties );
         const flattenArr = ( arr ) => arr.reduce((a, b) => {
             return a.concat( Array.isArray( b ) ? flattenArr(b) : b )
         }, [])
         // Finally just iterate over the Array list and grab the Names
         let allProps     = flattenArr( props );
-        let allPropNames = allProps.map( item => item.Name );
-        console.log( allPropNames );
-        
-        
+
         let matchingNames = data.filter( ( name, index ) => {
           // Figure out if the account name matches the search term.
           const regex = new RegExp( query, 'gi' );
           return name.AccountName.match( regex );
         });
         
-        let matchingProperties = allPropNames.map( property => {
-          console.log('property: ', property );
+        let matchingProperties = allProps.filter( property => {
           const regex = new RegExp( query, 'gi' );
-          console.log( property.Name );
-          return property.match( regex );
+          return property;
         })
         
         if ( this.dropDownOption === 'Accounts' ) {
