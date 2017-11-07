@@ -1,13 +1,17 @@
 <template>
    <div class="account-list-wrapper">
-       
+       <!-- Account List -->
        <h1 class="text-left">Accounts</h1>
        <ul class="account-list">
-           <li :class="{ active : isActive == key }" @click="showClickedAccount(name, key)" class="account-list__item" v-for="( name, key ) in accountNames">
+           <li :class="{ active : isActive == key }" 
+               @click="showClickedAccount( name, key )" 
+               class="account-list__item" 
+               v-for="( name, key ) in accountNames"
+            >
                {{ name }}
            </li>
        </ul>
-       
+       <!-- end Account List -->
    </div>
 </template>
 
@@ -16,6 +20,7 @@
     
     export default {
         name: 'AccountList',
+        props: [ 'selectedAccountIndex' ],
         data() {
             return {
                 isActive: 0
@@ -39,6 +44,12 @@
         computed: {
             accountNames() {
                 return ACCOUNT_DATA.map( item => item.AccountName )
+            }
+        },
+        watch: {
+            selectedAccountIndex() {
+                // Update isActive whenever the dropdown menu is clicked
+                this.isActive = this.selectedAccountIndex;
             }
         }
     };

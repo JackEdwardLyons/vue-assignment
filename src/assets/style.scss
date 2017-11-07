@@ -8,7 +8,7 @@ $baseGrey: #D6DCDB;
 
 /* Wrappers & Containers */
 .account-list-wrapper {
-    width: 50%;
+    width: 48%;
 }
 
 /* Mixins */
@@ -28,6 +28,7 @@ $baseGrey: #D6DCDB;
 }
 
 .account-list {
+    box-shadow: 1px 1px 1px rgba( 0, 0, 0, 0.2 );
     list-style: none;
     text-align: left;
     padding: 0;
@@ -36,6 +37,7 @@ $baseGrey: #D6DCDB;
         padding: 1rem .5rem;
         cursor: pointer;
         background: #FFF;
+        word-wrap: break-word;
         &:nth-child(even) {
             background: #E9E9E9;
         }
@@ -58,7 +60,19 @@ $baseGrey: #D6DCDB;
     color: #FFF;
 }
 
+.flex {
+    display: flex;
+}
+
+.space-around {
+    justify-content: space-around;
+}
+
 /* Base Styles */
 body {
     background: #EEEEED;
+}
+
+h1 {
+    font-size: 1.5em;
 }
