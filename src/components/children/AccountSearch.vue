@@ -21,9 +21,10 @@
             </div>
             
             <div class="button-wrapper flex">
-                <select class="text-input-wrapper__dropdown">
-                    <option>ACCOUNTS</option>
-                    <option>PROPERTIES</option>
+                <select v-model="selectedOption" @change="postNewOption" class="text-uppercase text-input-wrapper__dropdown">
+                    <option v-for="option in dropDownOptions">
+                        {{ option }}
+                    </option>
                 </select>
                 <button @click="findAccountMatch()" class="search-submit">Search</button>
             </div>
@@ -39,8 +40,8 @@
         data() {
             return {
                 searchTerm: '',
-                userInput: false,
-               
+                dropDownOptions: [ 'Accounts', 'Properties' ],
+                selectedOption: 'Accounts'
             };
         },
         methods: {
@@ -55,14 +56,32 @@
                 this.$emit( 'clicked', accountNameProps[ key ], key );
                 // Empty searchTerm for next search
                 this.searchTerm = '';
+            },
+            postNewOption( e ) {
+                this.$emit( 'newDropDownOption', this.selectedOption );
+                this.searchTerm = '';
             }
         },
         computed: {
             matchedAccountNames() {
                 if ( this.matchedAccounts.length ) {
-                   return this.matchedAccounts[0].map( item => item.AccountName ); 
+                  
+                  switch( this.selectedOption ) {
+                      case 'Accounts':
+                          console.log( 'accounts: ', this.matchedAccounts )
+                        return this.matchedAccounts[0].map( item => item.AccountName );
+                        break;
+                      case 'Properties':
+                        return this.matchedAccounts;
+                        break;
+                  }
                 }
-                
+            }
+        },
+        watch: {
+            selectedOption() {
+            
+                console.log('watching matchedAccountNames',  this.matchedAccountNames );
             }
         }
     };
@@ -83,6 +102,7 @@
         max-height: 50px;
         @extend .search-input-base;
         margin: 0 20px;
+        text-transform: uppercase;
     }
     &__search-input {
         display: inline-block;

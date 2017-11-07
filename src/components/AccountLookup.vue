@@ -4,6 +4,7 @@
     <div class="account-ui-wrapper">
       <AccountSearch @clicked="showSelectedAccount" 
                      @searched="findAccountMatch" 
+                     @newDropDownOption="getNewCategory"
                      :matchedAccounts="matchedAccounts" 
       />
       <div class="flex space-around">
@@ -30,11 +31,12 @@
     },
     data () {
       return {
-        selectedAccount: [],
         searchTerm: '',
-        allAccountData: ACCOUNT_DATA,
+        selectedAccount: [],
         matchedAccounts: [],
-        selectedAccountIndex: 0
+        selectedAccountIndex: 0,
+        dropDownOption: 'Accounts',
+        allAccountData: ACCOUNT_DATA,
       };
     },
     methods: {
@@ -53,15 +55,44 @@
         this.searchTerm = query;
         
         const data = this.allAccountData;
+        /* Tricky Code Alert!
+         * In order to retreive all the Property Names from each account
+         * I have created an array flatten function which iterates through
+         * each account and it's corresponding 'Properties'.
+         * This is done by concatenating all the Property Arrays using reduce
+         */
+        const props = data.map( account => account.Properties );
+        const flattenArr = ( arr ) => arr.reduce((a, b) => {
+            return a.concat( Array.isArray( b ) ? flattenArr(b) : b )
+        }, [])
+        // Finally just iterate over the Array list and grab the Names
+        let allProps     = flattenArr( props );
+        let allPropNames = allProps.map( item => item.Name );
+        console.log( allPropNames );
         
-        let searchMatch = data.filter( ( name, index ) => {
+        
+        let matchingNames = data.filter( ( name, index ) => {
           // Figure out if the account name matches the search term.
           const regex = new RegExp( query, 'gi' );
-          // If it does, return the matching Account Array
-          console.log( 'props', name.Properties.map( prop => prop ) );
           return name.AccountName.match( regex );
         });
-        return this.matchedAccounts.push( searchMatch );
+        
+        let matchingProperties = allPropNames.map( property => {
+          console.log('property: ', property );
+          const regex = new RegExp( query, 'gi' );
+          console.log( property.Name );
+          return property.match( regex );
+        })
+        
+        if ( this.dropDownOption === 'Accounts' ) {
+          return this.matchedAccounts.push( matchingNames );
+        } else {
+          return this.matchedAccounts.push( matchingProperties );
+        }
+      },
+      
+      getNewCategory( payload ) {
+        this.dropDownOption = payload;
       }
       
     },
