@@ -34,11 +34,9 @@
                         }
                       })
                     })
-
-                    var getCorrectIndex = this.propIndex.findIndex( item => item.length );
-                    //this.allAccountData[ propIndex ][0].map( account => account.Name )
-                    
-                    
+                    let correctIndex = this.propIndex.findIndex( a => a.length > 0 ) 
+                     return this.allAccountData[ correctIndex ].Properties
+                        .map( prop => prop.Name );
                 }
             }
         }

@@ -50,7 +50,6 @@
         this.selectedAccountIndex = key;
         // This gets the emitted payload from the AccountList Component
         this.selectedAccount = account;
-        console.log( 'selected Account: ', account );
       },
       
       findAccountMatch( query ) {
@@ -95,6 +94,8 @@
       
       getNewCategory( payload ) {
         this.dropDownOption = payload;
+        this.selectedAccountIndex = 0;
+        this.selectedAccount = ACCOUNT_DATA[0].Properties;
       }
       
     },

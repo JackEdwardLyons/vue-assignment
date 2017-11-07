@@ -51,22 +51,26 @@
             },
             clickedAccount( match, key ) {
                 console.log('match: ', match, 'key: ', key )
-                // Grab only the matching account properties
-                console.log( 'matchedaccs', this.matchedAccounts[0] );
-                // Iterate over all accounts
-                const accountNameProps = this.matchedAccounts[0].map( item => item.Properties );
-                const matchedIndex     = this.allAccountData.findIndex( item => item.AccountName.includes( match ) );
-
-                // Send payload with account name and index for toggling the "selected" class
-                this.$emit( 'clicked', accountNameProps[ matchedIndex ], matchedIndex );
+                
+                if ( this.selectedOption === 'Accounts' ) {
+                    // Grab only the matching account properties & Iterate over all accounts
+                    const accountNameProps = this.matchedAccounts[0].map( item => item.Properties );
+                    const matchedIndex     = this.allAccountData.findIndex( item => item.AccountName.includes( match ) );
+                    // Send payload with account name and index for toggling the "selected" class
+                    this.$emit( 'clicked', accountNameProps[ matchedIndex ], matchedIndex );  
+                    
+                } else if ( this.selectedOption === 'Properties' ) {
+                    const accountNameProps = this.matchedAccounts[0].map( item => item.Properties );
+                    const regex = new RegExp( match, 'gi' );
+                    const matchedIndex = this.allAccountData
+                        .map( account => account.Properties.map( a => a.Name ) )
+                        .findIndex( ( name, index ) => name.indexOf( match ) > -1 );
+                        
+                    this.$emit( 'clicked', this.allAccountData[ matchedIndex ], matchedIndex ); 
+                }
                 // Empty searchTerm for next search
                 this.searchTerm = '';
             },
-            
-            findNameIndex() {
-                
-            },
-            
             findPropIndex() {
                 var returnedProp = this.allAccountData.map( ( item, index ) => {
                     return item.Properties.filter( ( prop, key ) => {
@@ -79,7 +83,8 @@
                 console.log( propIndex )
                 return propIndex;
             },
-            postNewOption( e ) {
+            postNewOption() {
+                // Reset tables back to original state.
                 this.$emit( 'newDropDownOption', this.selectedOption );
                 this.searchTerm = '';
             }
@@ -94,6 +99,7 @@
                         break;
                       case 'Properties':
                         const search = this.matchedAccounts[0].map( item => item.Name );
+                        console.log( search,'search' );
                         const regex = new RegExp( this.searchTerm, 'gi' );
                         return search.filter( prop => prop.match( regex ) );
                         break;
