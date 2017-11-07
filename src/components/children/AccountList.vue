@@ -24,13 +24,13 @@
         methods: {
             showClickedAccount( name, key ) {
                 // Pass the index of the clicked name to set the active class.
-                this.activateClass( key )
+                this.activateClass( key );
                 // Retreive the clicked Array using filter
                 const selectedAccount = ACCOUNT_DATA.filter( account => account.AccountName === name );
                 // Grab only the properties from the clicked Name.
                 let selectedPropsFromAccount = selectedAccount[0].Properties;
                 // Emit event up to parent with the selectedAccount data.
-                this.$emit( 'clicked', selectedPropsFromAccount )
+                this.$emit( 'clicked', selectedPropsFromAccount );
             },
             activateClass( index ) {
                 this.isActive = index;

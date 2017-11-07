@@ -2,7 +2,7 @@
   <div class="container">
     
     <div class="account-ui-wrapper">
-      <AccountSearch />
+      <AccountSearch @searched="findAccountMatch" :matchedAccounts="matchedAccounts" />
       <div class="flex">
         <AccountList @clicked="showSelectedAccount" />
         <AccountProperties :selectedAccount="selectedAccount" />
@@ -27,7 +27,10 @@
     },
     data () {
       return {
-        selectedAccount: []
+        selectedAccount: [],
+        searchTerm: '',
+        allAccountData: ACCOUNT_DATA,
+        matchedAccounts: []
       };
     },
     methods: {
@@ -35,6 +38,23 @@
         this.selectedAccount = [];
         // This gets the emitted payload from the AccountList Component
         this.selectedAccount = account;
+      },
+      findAccountMatch( query ) {
+        // Start fresh on each function call
+        this.searchTerm      = [];
+        this.matchedAccounts = [];
+        this.searchTerm = query;
+        
+        const data = this.allAccountData;
+        
+        let searchMatch = data.filter( ( name, index ) => {
+          // Figure out if the account name matches the search term.
+          const regex = new RegExp( query, 'gi' );
+          // If it does, return the matching Account Array
+          return name.AccountName.match( regex );
+        });
+        
+        return this.matchedAccounts.push( searchMatch );
       }
     },
     created() {
@@ -43,7 +63,6 @@
   };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
 .container {
