@@ -22,21 +22,10 @@
         },
         computed: {
             selectedAccountProps() {
-                
                 if ( this.dropDownOption === 'Accounts' ) {
                    return this.selectedAccount.map( account => account.Name );
                 } else if (this.dropDownOption === 'Properties') {
-                    
-                    this.propIndex = this.allAccountData.map( ( item, index ) => {
-                      return item.Properties.filter( ( prop, key ) => {
-                        if ( prop.Name.includes( this.searchTerm ) ) {
-                          return item;
-                        }
-                      })
-                    })
-                    let correctIndex = this.propIndex.findIndex( a => a.length > 0 ) 
-                     return this.allAccountData[ correctIndex ].Properties
-                        .map( prop => prop.Name );
+                    return this.selectedAccount.map( account => account.Name );
                 }
             }
         }

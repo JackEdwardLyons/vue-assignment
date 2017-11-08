@@ -36,6 +36,9 @@
                 let selectedPropsFromAccount = selectedAccount[0].Properties;
                 // Emit event up to parent with the selectedAccount data.
                 this.$emit( 'clicked', selectedPropsFromAccount );
+                // Alert user!
+                let propNames = selectedPropsFromAccount.map( prop => prop.Name ).join(', ')
+                alert( `You have clicked ${ name } --- Properties include: ${ propNames }`)
             },
             activateClass( index ) {
                 this.isActive = index;

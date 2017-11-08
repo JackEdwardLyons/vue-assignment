@@ -50,8 +50,6 @@
                 this.$emit( 'searched', this.searchTerm );
             },
             clickedAccount( match, key ) {
-                console.log('match: ', match, 'key: ', key )
-                
                 if ( this.selectedOption === 'Accounts' ) {
                     // Grab only the matching account properties & Iterate over all accounts
                     const accountNameProps = this.matchedAccounts[0].map( item => item.Properties );
@@ -80,7 +78,6 @@
                     })
                 })
                 const propIndex = returnedProp.findIndex( item => item.length );
-                console.log( propIndex )
                 return propIndex;
             },
             postNewOption() {
@@ -99,7 +96,6 @@
                         break;
                       case 'Properties':
                         const search = this.matchedAccounts[0].map( item => item.Name );
-                        console.log( search,'search' );
                         const regex = new RegExp( this.searchTerm, 'gi' );
                         return search.filter( prop => prop.match( regex ) );
                         break;
