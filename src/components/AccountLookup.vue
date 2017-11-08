@@ -79,7 +79,7 @@
           const regex = new RegExp( query, 'gi' );
           return name.AccountName.match( regex );
         });
-        
+        // Do the same for the account Property
         let matchingProperties = allProps.filter( property => {
           const regex = new RegExp( query, 'gi' );
           return property;
